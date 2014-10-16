@@ -53,7 +53,7 @@ if __name__ == "__main__":
         LOCAL_PATH = path_inp
 
     while True:
-        print "默认上传文件: " + FILE_LIST
+        print "默认上传文件: ", FILE_LIST
         file_name_inp = raw_input("直接回车则上传上述文件, 输入文件名回车则向其中添加待上传文件:")
         if file_name_inp == '':
             break
@@ -67,6 +67,6 @@ if __name__ == "__main__":
 
         file_local = LOCAL_PATH + '/' + file_name_inp
         file_remote = REMOTE_PATH + '/' + file_name_inp
-        print "上传%s至%s" % (file_local, file_remote)
+        print "上传 %s 至 %s" % (file_local, file_remote)
         upload(oss, file_local, file_remote)
 
