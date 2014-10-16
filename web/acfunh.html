@@ -3,11 +3,33 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <!--<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>-->
-    <script src="../js/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!--<script src="../js/jquery.min.js"></script>-->
+    <!--more nginx config is needed to deploy js-->
 </head>
 <body>
 <h1>A 岛 头 条</h1>
+<p class="json-field"></p>
 
+
+<script>
+    console.log("执行了吗")
+    $.ajax({
+        type : "get",
+        async : false,
+        url : "http://h.acfun.tv/%E7%BB%BC%E5%90%88%E7%89%881.json",
+//        dataType : "jsonp",
+
+//        jsonp: "callbackparam", //服务端用于接收callback调用的function名的参数
+//        jsonpCallback:"success_jsonpCallback", //callback的function名称
+        success : function(json){
+            console.log(json)
+        },
+        error:function(){
+            alert('fail');
+
+        }
+    })
+</script>
 </body>
 </html>
