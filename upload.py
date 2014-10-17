@@ -11,7 +11,7 @@ from oss.oss_api import OssAPI
 HOST = "oss-cn-beijing.aliyuncs.com"
 ACCESS_ID = "KXHYBr8lH9kJQufz"
 SECRET_ACCESS_KEY = raw_input("请输入 KXHYBr8lH9kJQufz 对应的 SECRET_ACCESS_KEY:")
-BUCKET = "m1sic"
+BUCKET = "mus1c"
 REMOTE_PATH = "new_age/bandari/sunny_bay"
 
 LOCAL_PATH = "/home/snowonion/download"

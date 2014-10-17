@@ -1,0 +1,64 @@
+1. 这是一个没有节操的网站:
+http://h.acfun.tv
+
+2. 它提供一种神奇的 service, 就是在站内的几乎任何链接之后加 .任意字符 就能获得 json 格式的该链接对应的内容.
+比如 http://h.acfun.tv/技术宅
+对应的神奇链接是 http://h.acfun.tv/技术宅.whatever
+
+于是, 我想利用这个神奇 service, 从该网站上摘取一些东西下来...
+
+3. 这个神奇链接从浏览器直接访问可以看到 json, 用 python 去 http GET 也可以 get 到...
+------ get.py --------
+#!/usr/bin/python2
+#coding=utf8
+import urllib2
+import json
+
+req = urllib2.Request('http://h.acfun.tv/技术宅.jsonjsonjson')
+res = urllib2.urlopen(req)
+json_str = res.read()
+json_dic = json.loads(json_str)
+print json.dumps(json_dic, indent=4, encoding='utf-8')
+------- /get.py ---------
+
+得到的结果形如:
+{
+    "success": true,
+    "data": {
+        "replys": {
+            "t4642915": {
+                "uid": "fvWa73dz",
+		...
+
+但是在一个静态 html 里的<script>里用 Ajax 去请求这个神奇链接的话:
+--------- index.html --------------
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>A 岛 头 条</h1>
+<script>
+    $.getJSON("http://h.acfun.tv/%E6%8A%80%E6%9C%AF%E5%AE%85.jsonjson", function(json){
+        console.log(json);
+    });
+</script>
+</body>
+</html>
+---------- /index.html ----------------
+
+Chrome 的 log 就会报
+"XMLHttpRequest cannot load http://h.acfun.tv/%E6%8A%80%E6%9C%AF%E5%AE%85.jsonjson. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:63342' is therefore not allowed access. "
+
+查了一下是「同源策略」的问题...
+http://www.chinaz.com/program/2010/0111/103511.shtml
+
+似乎要服务器端配合才可以, 似乎我自己是解决不了的...
+
+4. 于是看起来只能写个动态网站, 在服务端请求完 json, 然后生成页面展示...
+啊不过在 rp主机 (us1.rpvhost.net) 通过 Nginx 部署 python 框架网站, 比 (通过 Nginx) 部署静态页面麻烦多了, 目前还没搞明白 orz
+什么 uWSGI 之类的...
+
+以上~
